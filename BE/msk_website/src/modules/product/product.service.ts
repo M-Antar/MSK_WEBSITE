@@ -1,0 +1,97 @@
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { CreateProductDto } from './dto/create-product.dto';
+import { ProductRepository } from 'src/models/product/product.repository';
+import { Product } from './entities/product.entity';
+import { Types } from 'mongoose';
+
+
+@Injectable()
+export class ProductService {
+  constructor(
+    private readonly productRepository:ProductRepository){
+
+    }
+  async create(product: Product) {
+    const productExist = await this.productRepository.getOne({slug:product.slug})
+    if(productExist)
+      throw new ConflictException("This product already exist")
+    
+      return await this.productRepository.create(product);
+
+  }
+
+async findByCategory(categoryId: string) {
+  const products = await this.productRepository.getAll({ categoryId });
+
+  return products.map((product: any) => ({
+    id: product._id.toString(),
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    image: product.photoLinks[0],
+    stock: product.stock, // ADD
+  }));
+}
+
+async findAll() {
+  const products = await this.productRepository.getAll();
+
+  return products.map((product: any) => ({
+    id: product._id.toString(),
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    image: product.photoLinks[0],
+    stock: product.stock, // ADD
+  }));
+}
+
+async findOne(id: string) {
+  const product = await this.productRepository.getOne({
+    _id: id,
+  });
+
+  if (!product) {
+    throw new NotFoundException("Product not found");
+  }
+
+  return {
+    id: product._id.toString(),
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    images: product.photoLinks,
+    sizes: product.size,
+    stock: product.stock, // ADD
+    color: product.color, // IMPORTANT if you're already using color
+  };
+}
+
+async findRelated(id: string) {
+  const product = await this.productRepository.getOne({
+    _id: id,
+  } as any);
+
+  if (!product) {
+    throw new NotFoundException(`Product ${id} not found`);
+  }
+
+  const related = await this.productRepository.getAll(
+    {
+      categoryId: product.categoryId,
+      _id: { $ne: id },
+    } as any,
+    undefined,
+    { limit: 2 },
+  );
+
+  return related.map((item: any) => ({
+    id: item._id.toString(),
+    name: item.name,
+    description: item.description,
+    price: item.price,
+    image: item.photoLinks[0],
+    stock: item.stock, // ADD
+  }));
+}
+}

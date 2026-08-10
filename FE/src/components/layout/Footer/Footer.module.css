@@ -1,0 +1,213 @@
+.footer {
+  margin-top: auto;
+  background: var(--shop-surface-muted);
+  border-top: 1px solid var(--shop-line);
+  padding: 64px 0 32px;
+  color: var(--shop-body);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 48px;
+}
+
+.logo {
+  font-family: var(--shop-font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--shop-ink);
+}
+
+.logoMark {
+  color: var(--shop-accent);
+}
+
+.blurb {
+  margin-top: 12px;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  max-width: 300px;
+  opacity: 0.85;
+}
+
+.heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--shop-ink);
+  margin-bottom: 18px;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.875rem;
+}
+
+.list a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.8;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+  display: inline-block;
+}
+
+.list a:hover {
+  color: var(--shop-accent);
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+.contactItem {
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.bottomBar {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--shop-line);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  flex-wrap: wrap;
+  gap: 16px;
+
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.copy {
+  margin: 0;
+}
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .grid > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 44px 0 24px;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .grid > :first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .blurb {
+    max-width: 320px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .heading {
+    margin-bottom: 14px;
+    font-size: 0.7rem;
+  }
+
+  .list {
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+  }
+
+  .list a {
+    padding: 2px 0;
+  }
+
+  .list a:hover {
+    transform: none;
+  }
+
+  .contactItem {
+    text-align: center;
+    font-size: 0.875rem;
+  }
+
+  .bottomBar {
+    margin-top: 32px;
+    padding-top: 20px;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    gap: 8px;
+
+    font-size: 0.75rem;
+  }
+
+  .copy {
+    line-height: 1.5;
+  }
+}
+
+/* =========================
+   SMALL PHONES
+   ========================= */
+
+@media (max-width: 380px) {
+  .footer {
+    padding: 36px 0 20px;
+  }
+
+  .grid {
+    gap: 28px;
+  }
+
+  .blurb {
+    max-width: 280px;
+    font-size: 0.82rem;
+  }
+
+  .list,
+  .contactItem {
+    font-size: 0.82rem;
+  }
+
+  .bottomBar {
+    font-size: 0.7rem;
+  }
+}

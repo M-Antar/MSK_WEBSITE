@@ -1,0 +1,86 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--shop-line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 68px;
+}
+
+.logo {
+  font-family: var(--shop-font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--shop-ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logoMark {
+  color: var(--shop-accent);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.link {
+  color: var(--shop-body);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.link:hover,
+.linkActive {
+  color: var(--shop-accent);
+}
+
+.cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--shop-ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.cart:hover {
+  color: var(--shop-accent);
+}
+
+.badge {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--shop-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .links {
+    gap: 16px;
+  }
+
+  .cart span:last-child {
+    display: none;
+  }
+}

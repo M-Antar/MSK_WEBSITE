@@ -1,0 +1,77 @@
+/*
+ * Global design tokens for the storefront.
+ * White background + one primary accent color (terracotta).
+ */
+:root {
+  --shop-accent: #b4522a;
+  --shop-accent-dark: #8f3f1f;
+  --shop-accent-soft: #fbf1ec;
+  --shop-ink: #1b1917;
+  --shop-body: #56504b;
+  --shop-line: #e7e2dd;
+  --shop-surface: #ffffff;
+  --shop-surface-muted: #faf8f6;
+  --shop-radius: 10px;
+  --shop-max-width: 1180px;
+  --shop-font-heading: "Space Grotesk", system-ui, sans-serif;
+  --shop-font-body: "DM Sans", system-ui, sans-serif;
+}
+
+/* Arabic (RTL): swap to an Arabic-friendly face and mirror the layout. */
+[dir="rtl"] {
+  --shop-font-heading: "Cairo", "Space Grotesk", system-ui, sans-serif;
+  --shop-font-body: "Cairo", "DM Sans", system-ui, sans-serif;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] .shop-root {
+  text-align: right;
+}
+
+[dir="rtl"] .shop-root h1,
+[dir="rtl"] .shop-root h2,
+[dir="rtl"] .shop-root h3,
+[dir="rtl"] .shop-root h4 {
+  letter-spacing: 0;
+}
+
+.shop-root {
+  font-family: var(--shop-font-body);
+  color: var(--shop-body);
+  background: var(--shop-surface);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-root h1,
+.shop-root h2,
+.shop-root h3,
+.shop-root h4 {
+  font-family: var(--shop-font-heading);
+  color: var(--shop-ink);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.shop-root p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.shop-container {
+  width: 100%;
+  max-width: var(--shop-max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.shop-section {
+  padding: 72px 0;
+}
+
+@media (max-width: 640px) {
+  .shop-section {
+    padding: 48px 0;
+  }
+}

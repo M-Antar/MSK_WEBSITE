@@ -1,0 +1,65 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--shop-radius);
+  border: 1px solid transparent;
+  font-family: var(--shop-font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 22px;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.base:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--shop-accent);
+  color: #fff;
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--shop-accent-dark);
+}
+
+.outline {
+  background: transparent;
+  color: var(--shop-ink);
+  border-color: var(--shop-line);
+}
+
+.outline:hover:not(:disabled) {
+  border-color: var(--shop-ink);
+}
+
+.light {
+  background: #fff;
+  color: var(--shop-accent);
+}
+
+.light:hover:not(:disabled) {
+  background: var(--shop-accent-soft);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--shop-body);
+  padding: 8px 10px;
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--shop-accent);
+}
+
+.block {
+  width: 100%;
+}

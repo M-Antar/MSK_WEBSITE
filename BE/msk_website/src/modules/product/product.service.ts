@@ -47,13 +47,26 @@ async findAll() {
 }
 
 async findOne(id: string) {
-  const product = await this.productRepository.getOne({
-    _id: id,
-  });
+  // Populate categoryId so we can read the category's slug (e.g. "isdal")
+  // without a second query. `getOne` forwards `options` straight to
+  // Model.findOne(filter, projection, options), and Mongoose's findOne
+  // options support a `populate` key, so this works with the existing
+  // AbstractRepository as-is - no repository changes needed.
+  const product = await this.productRepository.getOne(
+    { _id: id },
+    undefined,
+    { populate: 'categoryId' },
+  );
 
   if (!product) {
     throw new NotFoundException("Product not found");
   }
+
+  // After populate, `categoryId` is the populated category document at
+  // runtime (even though the Product entity types it as an ObjectId),
+  // so we cast to `any` to read `.slug` off it. Guarded with `?.` in case
+  // the referenced category was deleted and populate returns null.
+  const category = (product as any).categoryId;
 
   return {
     id: product._id.toString(),
@@ -64,6 +77,7 @@ async findOne(id: string) {
     sizes: product.size,
     stock: product.stock, // ADD
     color: product.color, // IMPORTANT if you're already using color
+    categorySlug: category?.slug, // e.g. "isdal" - drives frontend care instructions
   };
 }
 

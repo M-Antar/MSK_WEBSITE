@@ -1,4 +1,3 @@
-
 import {
   IsArray,
   IsEmail,
@@ -13,6 +12,8 @@ import {
 import { Type } from 'class-transformer';
 
 import { PaymentMethod } from 'src/common/types';
+import { Governorate } from 'src/common/constant/governorate';
+
 
 export class OrderProductDto {
   @IsMongoId()
@@ -40,6 +41,10 @@ export class AddressDto {
   @IsString()
   @IsNotEmpty()
   phoneNumber!: string;
+
+  @IsEnum(Governorate)
+  @IsNotEmpty()
+  governorate!: Governorate;
 }
 
 export class CreateOrderDto {
@@ -63,4 +68,3 @@ export class CreateOrderDto {
   @IsEnum(PaymentMethod)
   paymentMethod!: PaymentMethod;
 }
-

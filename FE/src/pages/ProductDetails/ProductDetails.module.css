@@ -284,6 +284,81 @@
 }
 
 /* =========================
+   CARE INSTRUCTIONS
+   ========================= */
+
+.careCard {
+  margin-top: 28px;
+  background: var(--shop-surface-muted, #f8fafc);
+  border-color: var(--shop-line, #e2e8f0);
+  gap: 16px;
+}
+
+.careHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.careIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.careTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--shop-ink, #0f172a);
+}
+
+.careList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--shop-ink-muted, #64748b);
+}
+
+.careItem {
+  position: relative;
+  padding-inline-start: 20px;
+}
+
+.careItem::before {
+  content: "•";
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--shop-accent, #2563eb);
+  font-weight: 700;
+}
+
+.careDivider {
+  height: 1px;
+  background: var(--shop-line, #e2e8f0);
+}
+
+.careNote {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--shop-ink, #0f172a);
+  line-height: 1.55;
+}
+
+/* =========================
    RESPONSIVE
    ========================= */
 

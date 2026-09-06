@@ -7,20 +7,28 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProductModule } from './modules/product/product.module';
 import { CategoryModule } from './modules/category/category.module';
 import { OrderModule } from './modules/order/order.module';
-
+import { MailModule } from './modules/email/email.module';
 
 @Module({
-  imports: [ProductModule,
+  imports: [
+    ProductModule,
     CategoryModule,
     OrderModule,
-    ConfigModule.forRoot({ load: [devConfig], isGlobal: true, }),
+    MailModule,
+    ConfigModule.forRoot({ 
+      load: [devConfig], 
+      isGlobal: true, 
+    }),
+
     MongooseModule.forRootAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (ConfigService: ConfigService) => ({
-        uri: ConfigService.get('db').url
-      })
-    })],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('db.url'),
+      }),
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

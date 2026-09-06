@@ -28,7 +28,7 @@ export class Product {
 
     @Prop({
         type: Types.ObjectId,
-        ref: 'category',
+        ref: 'Category',
         required: true,
     })
     categoryId!: Types.ObjectId;

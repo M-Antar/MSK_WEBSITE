@@ -74,6 +74,15 @@ export const translations = {
     "product.relatedEmpty": "Nothing related yet",
     "product.oneSize": "One size",
 
+    // Care instructions (Isdal / curtains)
+    "product.careTitle": "Isdal Care Instructions",
+    "product.careLine1":
+      "Wash with cold or lukewarm water; hand washing or a gentle cycle is preferred.",
+    "product.careLine2": "Avoid very hot water and frequent machine washing.",
+    "product.careLine3": "Do not wring or rub vigorously; let it air dry.",
+    "product.careNote":
+      "Important: please wash the curtain first before any shortening or alteration, as the fabric may shrink after washing.",
+
     // Cart
     "cart.title": "Your cart",
     "cart.emptyTitle": "Your cart is empty",
@@ -165,6 +174,15 @@ export const translations = {
     "product.relatedError": "المنتجات المشابهة غير متوفرة",
     "product.relatedEmpty": "لا توجد منتجات مشابهة بعد",
     "product.oneSize": "مقاس واحد",
+
+    // Care instructions (Isdal / curtains)
+    "product.careTitle": "تعليمات العناية بالإسدال",
+    "product.careLine1":
+      "يُغسل بماء بارد أو فاتر، ويفضل الغسيل اليدوي أو دورة لطيفة.",
+    "product.careLine2": "تجنبي الماء الساخن جداً والغسيل المتكرر في الغسالة.",
+    "product.careLine3": "لا يُعصر أو يُفرك بقوة، ويُترك ليجف في الهواء.",
+    "product.careNote":
+      "مهم: يُرجى غسل الإسدال أولاً قبل أي تقصير أو تضييق، لأن القماش قد ينكمش بعد الغسيل.",
 
     // Cart
     "cart.title": "سلة التسوق",

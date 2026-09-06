@@ -10,6 +10,9 @@ import { orderSchema } from 'src/models/order/order.schema';
 
 import { ProductModule } from '../product/product.module';
 
+import { MailModule } from '../email/email.module';
+import { TelegramModule } from '../telegram/telegram.module';
+
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -20,6 +23,8 @@ import { ProductModule } from '../product/product.module';
     ]),
 
     ProductModule,
+    MailModule,
+    TelegramModule,
   ],
 
   controllers: [
@@ -38,4 +43,3 @@ import { ProductModule } from '../product/product.module';
   ],
 })
 export class OrderModule {}
-

@@ -13,13 +13,14 @@ import styles from "./Products.module.css";
  * Category images.
  * The order matches the categories returned by the API.
  */
-
-const categoryImages = [
+  const categoryImages = [
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786019395/Eisdal-Green_ws06kc.jpg",
-  "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786136546/Mosalya_lmresx.jpg",
-  "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786053615/Perfume__buug4r.jpg",
-];
-
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1787838254/IMG_8126_pfirgr.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786053615/Perfume__buug4r.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1787832825/31.jfif_ktktx0.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786136546/Mosalya_lmresx.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788598595/IMG_8115_nnzaoa.jpg"
+  ];
 export function ProductsPage() {
   const { t, lang } = useLanguage();
 

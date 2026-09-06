@@ -17,6 +17,11 @@ import { formatPrice, toErrorMessage } from "@/utils/format";
 import styles from "./ProductDetails.module.css";
 import categoryStyles from "@/pages/Category/Category.module.css";
 
+// Category slug that should show the fabric/curtain care instructions block.
+// Requires the backend's GET /product/:id to return `categorySlug: "isdal"`
+// on the product (see product.categorySlug in types.ts).
+const CARE_INSTRUCTIONS_CATEGORY_SLUG = "isdal";
+
 export function ProductDetailsPage({ id }: { id: string }) {
   const { addItem } = useCart();
   const { t, lang } = useLanguage();
@@ -43,6 +48,9 @@ export function ProductDetailsPage({ id }: { id: string }) {
   const product = productQuery.data;
   const images = product?.images ?? [];
   const soldOut = product ? product.stock === 0 : false;
+
+  const showCareInstructions =
+    product?.categorySlug === CARE_INSTRUCTIONS_CATEGORY_SLUG;
 
   // Handle "one size" string and array sizes
   const sizes = product
@@ -245,6 +253,18 @@ export function ProductDetailsPage({ id }: { id: string }) {
                 </div>
 
                 {added && <p className={styles.notice}>{t("product.added")}</p>}
+
+                {showCareInstructions && (
+                  <Card className={styles.careCard}>
+                    <h3 className={styles.careTitle}>✓ {t("product.careTitle")}</h3>
+                    <ul className={styles.careList}>
+                      <li>{t("product.careLine1")}</li>
+                      <li>{t("product.careLine2")}</li>
+                      <li>{t("product.careLine3")}</li>
+                    </ul>
+                    <p className={styles.careNote}>{t("product.careNote")}</p>
+                  </Card>
+                )}
               </div>
             </div>
 

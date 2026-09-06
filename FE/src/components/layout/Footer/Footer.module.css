@@ -32,6 +32,36 @@
   opacity: 0.85;
 }
 
+.social {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--shop-line);
+  color: var(--shop-ink);
+  opacity: 0.85;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.socialLink:hover {
+  color: var(--shop-accent);
+  border-color: var(--shop-accent);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
 .heading {
   font-size: 0.75rem;
   font-weight: 600;
@@ -139,6 +169,10 @@
     margin-top: 10px;
     font-size: 0.85rem;
     line-height: 1.6;
+  }
+
+  .social {
+    justify-content: center;
   }
 
   .heading {

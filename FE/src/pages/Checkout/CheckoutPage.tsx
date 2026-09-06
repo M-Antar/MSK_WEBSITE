@@ -7,6 +7,11 @@ import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher/LanguageSwitc
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { placeOrder } from "@/services/order.service";
+import {
+  GOVERNORATE_FEES,
+  GOVERNORATE_LABELS,
+  type Governorate,
+} from "@/services/types";
 import { formatPrice, toErrorMessage } from "@/utils/format";
 
 import styles from "./Checkout.module.css";
@@ -33,7 +38,14 @@ export function CheckoutPage() {
     country: "",
     city: "",
     street: "",
+    governorate: "" as Governorate | "",
   });
+
+  const shippingFee = form.governorate
+    ? GOVERNORATE_FEES[form.governorate]
+    : 0;
+
+  const grandTotal = total + shippingFee;
 
   function update(field: keyof typeof form, value: string) {
     setForm((prev) => ({
@@ -47,6 +59,11 @@ export function CheckoutPage() {
 
     if (items.length === 0) {
       setStatus(t("checkout.emptyCart"));
+      return;
+    }
+
+    if (!form.governorate) {
+      setStatus("Please select your governorate.");
       return;
     }
 
@@ -67,6 +84,7 @@ export function CheckoutPage() {
           city: form.city,
           country: form.country,
           phoneNumber: form.phoneNumber,
+          governorate: form.governorate,
         },
 
         products: items.map((item) => ({
@@ -85,6 +103,7 @@ export function CheckoutPage() {
       });
       console.log("📍 ADDRESS:", payload.address);
       console.log("📦 ORDER PRODUCTS:", payload.products);
+      console.log("🚚 SHIPPING FEE:", shippingFee);
       console.log("💳 PAYMENT METHOD:", payload.paymentMethod);
       console.log("📤 FINAL ORDER PAYLOAD:", payload);
       console.log("====================================");
@@ -127,7 +146,7 @@ export function CheckoutPage() {
         ========================= */}
         <div className={styles["top"]}>
           <Link to="/" className={styles["logo"]}>
-            Maren
+            MSK
             <span className={styles["logoMark"]}>.</span>
           </Link>
 
@@ -242,6 +261,36 @@ export function CheckoutPage() {
               />
             </label>
 
+            {/* Governorate */}
+            <label className={styles["field"]}>
+              <span className={styles["label"]}>
+                Governorate
+              </span>
+
+              <select
+                className={styles["input"]}
+                value={form.governorate}
+                onChange={(e) =>
+                  update(
+                    "governorate",
+                    e.target.value,
+                  )
+                }
+                required
+              >
+                <option value="" disabled>
+                  Select governorate
+                </option>
+                {Object.entries(GOVERNORATE_LABELS).map(
+                  ([key, label]) => (
+                    <option key={key} value={key}>
+                      {label}
+                    </option>
+                  ),
+                )}
+              </select>
+            </label>
+
             {/* City */}
             <label className={styles["field"]}>
               <span className={styles["label"]}>
@@ -314,21 +363,41 @@ export function CheckoutPage() {
                   <span>
                     {formatPrice(
                       item.price *
-                        item.quantity,
+                      item.quantity,
                     )}
                   </span>
                 </div>
               ))
             )}
 
-            {/* Total */}
-            <div className={styles["totalRow"]}>
-              <span>{t("cart.total")}</span>
+            {/* Subtotal */}
+            {items.length > 0 && (
+              <div className={styles["line"]}>
+                <span className={styles["lineName"]}>
+                  {t("cart.total")}
+                </span>
+                <span>{formatPrice(total)}</span>
+              </div>
+            )}
 
-              <span>
-                {formatPrice(total)}
-              </span>
-            </div>
+            {/* Delivery Fee */}
+            {/* Delivery Fee */}
+            {items.length > 0 && form.governorate ? (
+              <div className={styles["line"]}>
+                <span className={styles["lineName"]}>
+                  Delivery ({GOVERNORATE_LABELS[form.governorate]})
+                </span>
+                <span>{formatPrice(shippingFee)}</span>
+              </div>
+            ) : null}
+
+            {/* Total */}
+            {items.length > 0 ? (
+              <div className={styles["totalRow"]}>
+                <span>{t("cart.total")}</span>
+                <span>{formatPrice(grandTotal)}</span>
+              </div>
+            ) : null}
 
             {/* Place Order */}
             <div className={styles["submit"]}>
@@ -343,8 +412,8 @@ export function CheckoutPage() {
                 {submitting
                   ? t("checkout.placing")
                   : t(
-                      "checkout.placeOrder",
-                    )}
+                    "checkout.placeOrder",
+                  )}
               </Button>
             </div>
 
@@ -360,4 +429,3 @@ export function CheckoutPage() {
     </div>
   );
 }
-

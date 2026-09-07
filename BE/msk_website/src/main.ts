@@ -1,18 +1,18 @@
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // CORS
   app.enableCors({
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:8080',
-      'http://192.168.1.8:8080',
-      'https://msk-website-eamd.vercel.app',
-    ],
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
   });
 
+  // Back4App provides PORT through environment variables
   const port = Number(process.env.PORT) || 8080;
 
   await app.listen(port, '0.0.0.0');
@@ -21,3 +21,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+

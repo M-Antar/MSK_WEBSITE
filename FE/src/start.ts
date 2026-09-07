@@ -27,3 +27,5 @@ const csrfMiddleware = createCsrfMiddleware({
 export const startInstance = createStart(() => ({
   requestMiddleware: [errorMiddleware, csrfMiddleware],
 }));
+
+console.log("API URL:", import.meta.env.VITE_API_BASE_URL);

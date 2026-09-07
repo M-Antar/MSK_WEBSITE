@@ -15,7 +15,6 @@ import { MailService } from '../email/email.service';
 import { TelegramService } from '../telegram/telegram.service';
 import { getShippingFee } from 'src/common/constant/governorate';
 
-
 interface VerifiedOrderProduct {
   productId: Types.ObjectId;
   name: string;
@@ -69,30 +68,28 @@ export class OrderService {
       });
     }
 
-    // Generate order number
     const count = await this.orderModel.countDocuments();
     const orderNumber = count + 1;
 
-    // Calculate shipping fee based on governorate
-    const shippingFee = getShippingFee(createOrderDto.address.governorate);
+    const shippingFee = getShippingFee(
+      createOrderDto.address.governorate,
+    );
 
-    // Calculate subtotal + total (products + delivery fee)
     const subtotal = products.reduce(
       (sum, product) => sum + product.totalPrice,
       0,
     );
+
     const total = subtotal + shippingFee;
 
-    // Create order
     const order = this.orderFactoryService.createOrder(
       createOrderDto,
       products,
+      total,
     );
 
-    // Save order
     const savedOrder = await this.orderRepository.create(order);
 
-    // Update product stock
     for (const item of products) {
       await this.productRepository.findOneAndUpdate(
         { _id: item.productId },
@@ -105,7 +102,6 @@ export class OrderService {
       );
     }
 
-    // Send confirmation email without blocking the order
     this.notifyOrderPlaced(
       createOrderDto.email,
       createOrderDto.fullName,
@@ -117,7 +113,6 @@ export class OrderService {
       console.error('Failed to send order confirmation email:', err);
     });
 
-    // Send Telegram notification without blocking the order
     this.notifyTelegram(
       createOrderDto,
       orderNumber,
@@ -179,11 +174,9 @@ ${productLines}
             <td style="padding:12px 0;border-bottom:1px solid #333;color:#eee;">
               ${product.name}
             </td>
-
             <td style="padding:12px 0;border-bottom:1px solid #333;color:#eee;text-align:center;">
               ${product.quantity}
             </td>
-
             <td style="padding:12px 0;border-bottom:1px solid #333;color:#eee;text-align:right;">
               ${product.price} LE
             </td>
@@ -194,9 +187,7 @@ ${productLines}
 
     const html = `
       <div style="background:#0d0d0d;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;">
-        
         <div style="max-width:480px;margin:0 auto;">
-          
           <h1 style="color:#fff;text-align:center;font-size:26px;margin-bottom:4px;">
             Order Confirmed
           </h1>
@@ -206,7 +197,6 @@ ${productLines}
           </p>
 
           <div style="background:#1a1a1a;border-radius:12px;padding:24px;margin-top:20px;">
-            
             <h2 style="color:#fff;font-size:20px;margin:0 0 12px;">
               Hi ${customerName},
             </h2>
@@ -220,17 +210,14 @@ ${productLines}
             </p>
 
             <table style="width:100%;border-collapse:collapse;">
-              
               <thead>
                 <tr>
                   <th style="text-align:left;color:#888;border-bottom:1px solid #444;padding-bottom:8px;">
                     Item
                   </th>
-
                   <th style="text-align:center;color:#888;border-bottom:1px solid #444;padding-bottom:8px;">
                     Qty
                   </th>
-
                   <th style="text-align:right;color:#888;border-bottom:1px solid #444;padding-bottom:8px;">
                     Price
                   </th>
@@ -240,7 +227,6 @@ ${productLines}
               <tbody>
                 ${rows}
               </tbody>
-
             </table>
 
             <p style="color:#ccc;display:flex;justify-content:space-between;margin-top:16px;">
@@ -251,7 +237,6 @@ ${productLines}
             <p style="color:#fff;font-weight:bold;text-align:right;margin-top:8px;">
               Total: ${total.toFixed(2)} LE
             </p>
-
           </div>
         </div>
       </div>

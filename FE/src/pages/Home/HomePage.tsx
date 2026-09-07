@@ -11,17 +11,16 @@
   const heroImages = [
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786019395/Eisdal-Green_ws06kc.jpg",
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786020794/Eisdal-black_rgjeta.jpg",
-    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788598824/IMG_8128_u6oadp.jpg",
-    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788598830/IMG_8115_itpash.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788598595/IMG_8115_nnzaoa.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788688785/C2_u3kkxa.jpg",
   ];
 
   const categoryImages = [
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786019395/Eisdal-Green_ws06kc.jpg",
-    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1787838254/IMG_8126_pfirgr.jpg",
+    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788598595/IMG_8115_nnzaoa.jpg",
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786053615/Perfume__buug4r.jpg",
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1787832825/31.jfif_ktktx0.jpg",
     "https://res.cloudinary.com/dvq8x0qja/image/upload/v1786136546/Mosalya_lmresx.jpg",
-    "https://res.cloudinary.com/dvq8x0qja/image/upload/v1788598595/IMG_8115_nnzaoa.jpg"
   ];
 
   const AUTOPLAY_INTERVAL = 4500;

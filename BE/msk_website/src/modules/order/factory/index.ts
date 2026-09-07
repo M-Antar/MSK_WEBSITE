@@ -1,4 +1,4 @@
-
+  
 import { Injectable } from '@nestjs/common';
 import { Types } from 'mongoose';
 
@@ -17,6 +17,7 @@ export class OrderFactoryService {
   createOrder(
     createOrderDto: CreateOrderDto,
     products: VerifiedOrderProduct[],
+    total: number,
   ): Order {
     const order = new Order();
 
@@ -36,10 +37,7 @@ export class OrderFactoryService {
 
     order.status = 'pending';
 
-    order.totalAmount = products.reduce(
-      (total, product) => total + product.totalPrice,
-      0,
-    );
+    order.totalAmount = total;
 
     return order;
   }

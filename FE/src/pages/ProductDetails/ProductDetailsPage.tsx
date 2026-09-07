@@ -256,7 +256,7 @@ export function ProductDetailsPage({ id }: { id: string }) {
 
                 {showCareInstructions && (
                   <Card className={styles.careCard}>
-                    <h3 className={styles.careTitle}>✓ {t("product.careTitle")}</h3>
+                    <h3 className={styles.careTitle}>{t("product.careTitle")}</h3>
                     <ul className={styles.careList}>
                       <li>{t("product.careLine1")}</li>
                       <li>{t("product.careLine2")}</li>

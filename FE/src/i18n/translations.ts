@@ -27,7 +27,7 @@ export const translations = {
     // Home
     "home.heroTitle": "Everyday essentials, carefully chosen.",
     "home.heroText":
-      "A short, honest catalogue instead of an endless aisle. Two categories, considered materials, and prices that make sense.",
+      "A short and honest list instead of endless shelves, and reasonable prices.",
     "home.shopNow": "Shop Now",
     "home.eyebrow": "About the store",
     "home.introTitle": "Small catalogue, high standards.",
@@ -43,7 +43,7 @@ export const translations = {
     // Products (categories)
     "products.title": "Browse the collection",
     "products.subtitle":
-      "Two categories, each kept deliberately small. Pick one to see what is in stock.",
+      "Discover our outstanding collection and choose what suits your taste.",
     "products.loading": "Loading categories…",
     "products.errorTitle": "Couldn't load categories",
     "products.emptyTitle": "No categories yet",
@@ -129,7 +129,7 @@ export const translations = {
     // Home
     "home.heroTitle": "أساسيات يومية مختارة بعناية.",
     "home.heroText":
-      "قائمة قصيرة وصادقة بدلاً من رفوف لا تنتهي. فئتان فقط، ومواد مدروسة، وأسعار منطقية.",
+      "قائمة قصيرة وصادقة بدلاً من رفوف لا تنتهي , وأسعار منطقية.",
     "home.shopNow": "تسوّق الآن",
     "home.eyebrow": "عن المتجر",
     "home.introTitle": "تشكيلة صغيرة ومعايير عالية.",
@@ -144,7 +144,7 @@ export const translations = {
 
     // Products (categories)
     "products.title": "استعرض التشكيلة",
-    "products.subtitle": "فئتان فقط، كل منهما صغيرة بشكل مقصود. اختر واحدة لرؤية المتوفر.",
+    "products.subtitle": "اكتشف مجموعتنا المتميزة واختر ما يناسب ذوقك.",
     "products.loading": "جارٍ تحميل الفئات…",
     "products.errorTitle": "تعذّر تحميل الفئات",
     "products.emptyTitle": "لا توجد فئات بعد",

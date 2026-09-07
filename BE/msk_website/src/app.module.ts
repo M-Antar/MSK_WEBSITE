@@ -11,13 +11,9 @@ import { MailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
-    ProductModule,
-    CategoryModule,
-    OrderModule,
-    MailModule,
-    ConfigModule.forRoot({ 
-      load: [devConfig], 
-      isGlobal: true, 
+    ConfigModule.forRoot({
+      load: [devConfig],
+      isGlobal: true,
     }),
 
     MongooseModule.forRootAsync({
@@ -27,7 +23,13 @@ import { MailModule } from './modules/email/email.module';
         uri: configService.get<string>('db.url'),
       }),
     }),
+
+    ProductModule,
+    CategoryModule,
+    OrderModule,
+    MailModule,
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })

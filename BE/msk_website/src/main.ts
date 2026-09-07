@@ -8,13 +8,16 @@ async function bootstrap() {
     origin: [
       'http://localhost:5173',
       'http://localhost:8080',
-      'http://192.168.1.8:8080'
-      // Add your laptop IP if needed:
-      // 'http://192.168.1.10:5173',
+      'http://192.168.1.8:8080',
+      'https://msk-website-eamd.vercel.app',
     ],
   });
 
-  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+  const port = Number(process.env.PORT) || 8080;
+
+  await app.listen(port, '0.0.0.0');
+
+  console.log(`Application running on port ${port}`);
 }
 
 bootstrap();

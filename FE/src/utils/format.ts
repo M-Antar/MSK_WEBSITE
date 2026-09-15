@@ -1,8 +1,8 @@
 /** Formats a numeric price coming from the API. */
-export function formatPrice(value: number, currency = "USD"): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency }).format(value);
-}
 
+export function formatPrice(value: number): string {
+  return `${new Intl.NumberFormat("en-US").format(value)} LE`;
+}
 /** Turns an API/service error into a short user-facing message. */
 export function toErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message;

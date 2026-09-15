@@ -136,6 +136,17 @@
   background-color: #f4f4f5;
   cursor: not-allowed;
 }
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.priceOriginal {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 0.9em;
+}
 
 /* Mobile Adjustments */
 @media (max-width: 640px) {

@@ -17,7 +17,14 @@ async function bootstrap() {
         origin === 'http://localhost:8081' ||
         origin === 'http://localhost:5173' ||
         origin === 'https://msk-website-eamd.vercel.app' ||
-        origin.endsWith('.vercel.app');
+        origin.endsWith('.vercel.app') ||
+        // Allow any device on a local Wi-Fi/LAN network during development
+        // (e.g. testing from a phone via http://192.168.x.x:8080)
+        /^http:\/\/192\.168\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(origin) ||
+        /^http:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(origin) ||
+        /^http:\/\/172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(
+          origin,
+        );
 
       if (allowed) {
         callback(null, true);

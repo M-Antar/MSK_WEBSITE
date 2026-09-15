@@ -21,16 +21,25 @@ export class ProductService {
   }
 
 async findByCategory(categoryId: string) {
-  const products = await this.productRepository.getAll({ categoryId });
+  const products = await this.productRepository.getAll(
+    { categoryId },
+    undefined,
+    { populate: 'categoryId' },
+  );
 
-  return products.map((product: any) => ({
-    id: product._id.toString(),
-    name: product.name,
-    description: product.description,
-    price: product.price,
-    image: product.photoLinks[0],
-    stock: product.stock, // ADD
-  }));
+  return products.map((product: any) => {
+    const category = product.categoryId;
+
+    return {
+      id: product._id.toString(),
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      image: product.photoLinks[0],
+      stock: product.stock,
+      categorySlug: category?.slug,
+    };
+  });
 }
 
 async findAll() {

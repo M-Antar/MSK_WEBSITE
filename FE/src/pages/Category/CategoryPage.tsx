@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import type { MouseEvent } from "react";
@@ -16,34 +17,51 @@ import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { formatPrice, toErrorMessage } from "@/utils/format";
 
+
 import type { Product } from "@/services/types";
 
 import styles from "./Category.module.css";
 
 import { ShoppingCart } from "lucide-react";
+import { getDiscountOriginalPrice } from "@/utils/discount";
 
 export function CategoryPage({ category }: { category: string }) {
   const { t, lang } = useLanguage();
   const navigate = useNavigate();
   const { addItem } = useCart();
 
-  const { data: categoryInfo, isPending: isCategoryPending } = useQuery({
+  const {
+    data: categoryInfo,
+    isPending: isCategoryPending,
+  } = useQuery({
     queryKey: ["category", category, lang],
     queryFn: () => getCategoryById(category),
     retry: false,
   });
 
-  const { data, isPending, isError, error, refetch } = useQuery({
+  const {
+    data,
+    isPending,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["products", category, lang],
     queryFn: () => getProductsByCategory(category),
     retry: false,
   });
 
   const goToProduct = (id: string) => {
-    void navigate({ to: "/product/$id", params: { id } });
+    void navigate({
+      to: "/product/$id",
+      params: { id },
+    });
   };
 
-  const handleQuickAdd = (e: MouseEvent<HTMLButtonElement>, product: Product) => {
+  const handleQuickAdd = (
+    e: MouseEvent<HTMLButtonElement>,
+    product: Product,
+  ) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -51,13 +69,6 @@ export function CategoryPage({ category }: { category: string }) {
       return;
     }
 
-    // IMPORTANT: size/color must stay `undefined` here (not a placeholder
-    // string like "one-size"), because CartContext merges cart lines by
-    // productId + size + color. ProductDetailsPage uses `undefined` for
-    // products without a real size selection, so quick-add has to match
-    // that exactly or the same product ends up as two separate cart lines
-    // (one from quick add, one from the detail page) instead of the
-    // quantity just incrementing on a single line.
     addItem({
       productId: product.id,
       name: product.name,
@@ -72,20 +83,29 @@ export function CategoryPage({ category }: { category: string }) {
   return (
     <section className="shop-section">
       <div className="shop-container">
+
         {/* HEADER */}
         <div className={styles["header"]}>
-          <Link to="/products" className={styles["crumb"]}>
+          <Link
+            to="/products"
+            className={styles["crumb"]}
+          >
             {t("category.allCategories")}
           </Link>
+
           <h1 className={styles["title"]}>
             {isCategoryPending
               ? t("category.loading")
-              : categoryInfo?.name || t("products.title") || "Products"}
+              : categoryInfo?.name ||
+                t("products.title") ||
+                "Products"}
           </h1>
         </div>
 
         {/* LOADING STATE */}
-        {isPending ? <Loader label={t("category.loading")} /> : null}
+        {isPending ? (
+          <Loader label={t("category.loading")} />
+        ) : null}
 
         {/* ERROR STATE */}
         {isError ? (
@@ -110,7 +130,10 @@ export function CategoryPage({ category }: { category: string }) {
             title={t("category.emptyTitle")}
             message={t("category.emptyMessage")}
             action={
-              <Link to="/products" className={buttonClasses("outline")}>
+              <Link
+                to="/products"
+                className={buttonClasses("outline")}
+              >
                 {t("category.back")}
               </Link>
             }
@@ -120,52 +143,151 @@ export function CategoryPage({ category }: { category: string }) {
         {/* PRODUCT GRID */}
         {data && data.length > 0 ? (
           <div className={styles["grid"]}>
-            {data.map((product) => (
-              <Card
-                key={product.id}
-                flush
-                hoverable
-                className={styles["clickable"]}
-                onClick={() => goToProduct(product.id)}
-              >
-                {/* MEDIA & BADGE */}
-                <div className={styles["media"]}>
-                  <img src={product.image} alt={product.name} loading="lazy" />
-                  {product.stock === 0 && (
-                    <span className={styles["soldOutBadge"]}>
-                      {lang === "ar" ? "نفذت الكمية" : "SOLD OUT"}
-                    </span>
-                  )}
-                </div>
+            {data.map((product) => {
+              /*
+               * Frontend discount:
+               *
+               * Example:
+               * categorySlug = "isdal"
+               * original price = 750
+               * actual price = product.price (e.g. 550)
+               *
+               * The original price is only displayed when
+               * it is greater than the current product price.
+               */
+              const discountOriginalPrice =
+                getDiscountOriginalPrice(
+                  product.categorySlug,
+                  product.price,
+                );
 
-                {/* DETAILS */}
-                <div className={styles["body"]}>
-                  <h2 className={styles["name"]}>{product.name}</h2>
-                  <span className={styles["price"]}>{formatPrice(product.price)}</span>
-                  <p className={styles["desc"]}>{product.description}</p>
+              const hasDiscount =
+                discountOriginalPrice !== undefined;
 
-                  <div className={styles["action"]}>
-                    {product.stock === 0 ? (
-                      <span className={styles["soldOutBtn"]}>
-                        {lang === "ar" ? "نفذت الكمية" : "SOLD OUT"}
-                      </span>
-                    ) : (
-                      <button
-                        type="button"
-                        className={buttonClasses("outline")}
-                        onClick={(e) => handleQuickAdd(e, product)}
-                        aria-label={t("category.quickAdd")}
+              return (
+                <Card
+                  key={product.id}
+                  flush
+                  hoverable
+                  className={styles["clickable"]}
+                  onClick={() =>
+                    goToProduct(product.id)
+                  }
+                >
+                  {/* MEDIA & BADGE */}
+                  <div className={styles["media"]}>
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      loading="lazy"
+                    />
+
+                    {product.stock === 0 && (
+                      <span
+                        className={
+                          styles["soldOutBadge"]
+                        }
                       >
-                        <ShoppingCart size={16} aria-hidden="true" />
-                      </button>
+                        {lang === "ar"
+                          ? "نفذت الكمية"
+                          : "SOLD OUT"}
+                      </span>
                     )}
                   </div>
-                </div>
-              </Card>
-            ))}
+
+                  {/* DETAILS */}
+                  <div className={styles["body"]}>
+                    <h2 className={styles["name"]}>
+                      {product.name}
+                    </h2>
+
+                    {/* PRICE */}
+                    {hasDiscount ? (
+                      <div
+                        className={
+                          styles["priceRow"]
+                        }
+                      >
+                        <span
+                          className={
+                            styles["priceOriginal"]
+                          }
+                        >
+                          {formatPrice(
+                            discountOriginalPrice,
+                          )}
+                        </span>
+
+                        <span
+                          className={
+                            styles["price"]
+                          }
+                        >
+                          {formatPrice(
+                            product.price,
+                          )}
+                        </span>
+                      </div>
+                    ) : (
+                      <span
+                        className={
+                          styles["price"]
+                        }
+                      >
+                        {formatPrice(
+                          product.price,
+                        )}
+                      </span>
+                    )}
+
+                    <p className={styles["desc"]}>
+                      {product.description}
+                    </p>
+
+                    {/* ACTION */}
+                    <div className={styles["action"]}>
+                      {product.stock === 0 ? (
+                        <span
+                          className={
+                            styles["soldOutBtn"]
+                          }
+                        >
+                          {lang === "ar"
+                            ? "نفذت الكمية"
+                            : "SOLD OUT"}
+                        </span>
+                      ) : (
+                        <button
+                          type="button"
+                          className={buttonClasses(
+                            "outline",
+                          )}
+                          onClick={(e) =>
+                            handleQuickAdd(
+                              e,
+                              product,
+                            )
+                          }
+                          aria-label={t(
+                            "category.quickAdd",
+                          )}
+                        >
+                          <ShoppingCart
+                            size={16}
+                            aria-hidden="true"
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         ) : null}
       </div>
     </section>
   );
 }
+
+

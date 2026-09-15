@@ -357,7 +357,31 @@
   color: var(--shop-ink, #0f172a);
   line-height: 1.55;
 }
+.descSpecs {
+  margin: 8px 0 16px;
+  padding-inline-start: 20px;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
+.descSpecLabel {
+  font-weight: 600;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.priceOriginal {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 0.9em;
+}
 /* =========================
    RESPONSIVE
    ========================= */

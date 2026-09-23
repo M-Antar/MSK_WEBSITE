@@ -51,7 +51,7 @@ async findAll() {
     description: product.description,
     price: product.price,
     image: product.photoLinks[0],
-    stock: product.stock, // ADD
+    stock: product.stock, 
   }));
 }
 
@@ -71,10 +71,7 @@ async findOne(id: string) {
     throw new NotFoundException("Product not found");
   }
 
-  // After populate, `categoryId` is the populated category document at
-  // runtime (even though the Product entity types it as an ObjectId),
-  // so we cast to `any` to read `.slug` off it. Guarded with `?.` in case
-  // the referenced category was deleted and populate returns null.
+ 
   const category = (product as any).categoryId;
 
   return {
@@ -84,9 +81,9 @@ async findOne(id: string) {
     price: product.price,
     images: product.photoLinks,
     sizes: product.size,
-    stock: product.stock, // ADD
-    color: product.color, // IMPORTANT if you're already using color
-    categorySlug: category?.slug, // e.g. "isdal" - drives frontend care instructions
+    stock: product.stock, 
+    color: product.color, 
+    categorySlug: category?.slug, // e.g. "isdal"
   };
 }
 
@@ -114,7 +111,7 @@ async findRelated(id: string) {
     description: item.description,
     price: item.price,
     image: item.photoLinks[0],
-    stock: item.stock, // ADD
+    stock: item.stock, 
   }));
 }
 }

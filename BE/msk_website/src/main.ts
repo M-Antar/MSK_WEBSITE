@@ -17,8 +17,8 @@ async function bootstrap() {
         origin === 'http://localhost:8081' ||
         origin === 'http://localhost:5173' ||
         origin === 'https://msk-website-eamd.vercel.app' ||
-        origin === 'https://yourdomain.com' ||
-        origin === 'https://www.yourdomain.com' ||
+        origin === 'https://mskbrand.com' ||
+        origin === 'https://www.mskbrand.com' ||
         origin.endsWith('.vercel.app') ||
         // Allow any device on a local Wi-Fi/LAN network during development
         // (e.g. testing from a phone via http://192.168.x.x:8080)

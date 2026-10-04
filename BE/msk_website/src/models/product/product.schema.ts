@@ -11,7 +11,7 @@ export class Product {
     price!: number;
     @Prop({ type: String, required: true, trim: true })
     size!: string;
-    @Prop({ type: Number, required: true, min: 1 })
+    @Prop({ type: Number, required: true, min: 0 ,default:0 })
     stock!: number;
     @Prop({ type: Number, required: true, min: 0 })
     sold!: number;

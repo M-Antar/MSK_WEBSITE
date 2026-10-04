@@ -18,9 +18,10 @@ async function bootstrap() {
         origin === 'http://localhost:8081' ||
         origin === 'http://localhost:5173' ||
         origin === 'https://msk-website-eamd.vercel.app' ||
+        origin === 'https://admin.mskbrand.com' || // admin dashboard
         origin === 'https://mskbrand.com' ||
         origin === 'https://www.mskbrand.com' ||
-        origin.endsWith('.vercel.app') ||
+        origin.endsWith('.vercel.app') || // consider replacing with specific URLs
         /^http:\/\/192\.168\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(origin) ||
         /^http:\/\/10\.\d{1,3}\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(origin) ||
         /^http:\/\/172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}(:\d+)?$/.test(
@@ -35,7 +36,13 @@ async function bootstrap() {
     },
     credentials: true,
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Requested-With',
+      'Accept',
+      'x-admin-key', // needed for the admin dashboard
+    ],
   });
 
   const port = Number(process.env.PORT) || 8080;
